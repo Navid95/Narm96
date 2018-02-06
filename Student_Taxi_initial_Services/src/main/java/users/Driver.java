@@ -27,7 +27,7 @@ public class Driver extends User {
 		this.Gender = Gender;
 		this.UserName = UserName;
 		this.PassWord = PassWord;
-		this.StuNumber = StuNum;
+		this.StuNum = StuNum;
 		this.NationalNum = NationalNum;
 		this.Car = Car;
 
@@ -47,39 +47,11 @@ public class Driver extends User {
 	public void ChoosePassenger() {
 	}
 
+	
+	
 	// Getters
 
-	public String getFirstName() {
-		return this.FirstName;
-	}
 
-	public String getLastName() {
-		return this.LastName;
-	}
-
-	public String getUserName() {
-		return this.UserName;
-	}
-
-	public String getPassWord() {
-		return this.PassWord;
-	}
-
-	public String getGender() {
-		return this.Gender;
-	}
-
-	public int getStuNUm() {
-		return this.StuNumber;
-	}
-
-	public int getNationalNum() {
-		return this.NationalNum;
-	}
-
-	public int getId() {
-		return this.id;
-	}
 
 	public String getCar() {
 		return this.Car;

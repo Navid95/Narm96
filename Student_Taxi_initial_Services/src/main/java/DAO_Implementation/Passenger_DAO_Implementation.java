@@ -23,7 +23,7 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 		sql = "INSERT INTO `passenger`( `FirstName`, `LastName`, `Gender`, `UserName`, `PassWord`, `StuNum`, `NationalNum`)"
 				+ " VALUES ('" + passenger.getFirstName() + "','" + passenger.getLastName() + "','"
 				+ passenger.getGender() + "'," + "'" + passenger.getUserName() + "','" + passenger.getPassWord() + "',"
-				+ passenger.getStuNUm() + "," + passenger.getNationalNum() + ")";
+				+ passenger.getStuNum() + "," + passenger.getNationalNum() + ")";
 
 		try {
 

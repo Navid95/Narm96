@@ -54,7 +54,7 @@ public class DrivetTest {
 
 	@Test
 	public void testGetStuNUm() {
-		assertEquals(StuNum, driver.getStuNUm());
+		assertEquals(StuNum, driver.getStuNum());
 	}
 
 	@Test

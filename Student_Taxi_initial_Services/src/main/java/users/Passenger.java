@@ -28,7 +28,7 @@ public class Passenger extends User {
 		this.Gender = Gender;
 		this.UserName = UserName;
 		this.PassWord = PassWord;
-		this.StuNumber = StuNum;
+		this.StuNum = StuNum;
 		this.NationalNum = NationalNum;
 		
 	}
@@ -45,90 +45,6 @@ public class Passenger extends User {
 	public void RateTrip() {
 	}
 
-	// ************************************************** Getters ***************************************************
-
-	public String getFirstName() {
-		return this.FirstName;
-	}
-
-	public String getLastName() {
-		return this.LastName;
-	}
-
-	public String getUserName() {
-		return this.UserName;
-	}
-
-	public String getPassWord() {
-		return this.PassWord;
-	}
-
-	public String getGender() {
-		return this.Gender;
-	}
-
-	public int getStuNUm() {
-		return this.StuNumber;
-	}
-
-	public int getNationalNum() {
-		return this.NationalNum;
-	}
-
-	public int getId() {
-		return this.id;
-	}
 	
-//	********************************************* Setters *******************************************************
-	
-	public void setId(int id) {
-		
-		this.id = id;
-	}
-	
-	@JsonProperty("FirstName")
-	public void setFirstName(String firstName) {
-		
-		this.FirstName = firstName;
-		
-	}
-	@JsonProperty("llllll")
-	public void setLastName(String lastName) {
-		
-		this.LastName = lastName;
-		
-	}
-	
-	@JsonProperty("UserName")
-	public void setUserName(String userName) {
-		
-		this.UserName = userName;
-		
-	}
-	
-	@JsonProperty("PassWord")
-	public void setPassWord(String passWord) {
-		
-		this.PassWord = passWord;
-		
-	}
-	
-	@JsonProperty("sssssssssss")
-	public void setStuNum(int stuNum) {
-		
-		this.StuNumber = stuNum;
-		
-	}
-	@JsonProperty("NationalNum")
-	public void setNationalNum(int nationalNum) {
-		
-		this.NationalNum= nationalNum;
-		
-	}
-	@JsonProperty("Gender")
-	public void setGender(String gender) {
-		
-		this.Gender= gender;
-		
-	}
+
 }
