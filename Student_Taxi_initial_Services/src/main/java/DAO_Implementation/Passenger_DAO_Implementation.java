@@ -3,6 +3,9 @@ package DAO_Implementation;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import DAOs.Passenger_DAO;
 import DataBase_Connection.mysql_Connection;
 import users.Passenger;
@@ -14,6 +17,10 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 		new mysql_Connection();
 	}
 
+	
+	// *********************************************************************************************************
+
+	
 	public Passenger CreateNew(Passenger passenger) {
 
 		String sql;
@@ -306,6 +313,8 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 			
 			result = mysql_Connection.stmt.executeUpdate(sql);
 			
+			mysql_Connection.conn.commit();
+			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -320,6 +329,71 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 		}
 		
 		return true;
+		
+	}
+	
+	// *********************************************************************************************************
+	
+	public List<Passenger> showAll(int offset , int rowNum){
+		
+		String sql;
+		
+		List<Passenger> passengers = new ArrayList<Passenger>();
+		
+		sql = "SELECT * FROM `passenger` LIMIT"+offset+","+rowNum+";";
+		
+		try {
+			
+			mysql_Connection.rs = mysql_Connection.stmt.executeQuery(sql);
+			
+			mysql_Connection.conn.commit();
+			
+			while (mysql_Connection.rs.next()) {
+				
+				Passenger passenger = new Passenger();
+				
+				passenger.setFirstName(mysql_Connection.rs.getString("FirstName"));
+				
+				passenger.setLastName(mysql_Connection.rs.getString("LastName"));
+				
+				passenger.setUserName(mysql_Connection.rs.getString("UserName"));
+				
+				passenger.setPassWord(mysql_Connection.rs.getString("PassWord"));
+				
+				passenger.setStuNum(Integer.parseInt(mysql_Connection.rs.getString("StuNum")));
+				
+				passenger.setNationalNum(Integer.parseInt(mysql_Connection.rs.getString("NationalNum")));
+				
+				passenger.setGender(mysql_Connection.rs.getString("Gender"));
+				
+				passenger.setId(Integer.parseInt(mysql_Connection.rs.getString("ID")));
+				
+				passengers.add(passenger);
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			if (mysql_Connection.conn != null)
+
+				try {
+
+					mysql_Connection.conn.rollback();
+
+				} catch (SQLException e1) {
+
+					e1.printStackTrace();
+
+					return null;
+				}
+
+			
+			e.printStackTrace();
+			
+			return null;
+		}
+		
+		return passengers;
 		
 	}
 	

@@ -1,5 +1,7 @@
 package DAOs;
 
+import java.util.List;
+
 import users.Passenger;
 
 public interface Passenger_DAO {
@@ -15,5 +17,7 @@ public interface Passenger_DAO {
 			int NationalNum, String Gender , int id);
 	
 	public Boolean Delete(int id);
+	
+	public List<Passenger> showAll(int offset , int rowNum);
 
 }
