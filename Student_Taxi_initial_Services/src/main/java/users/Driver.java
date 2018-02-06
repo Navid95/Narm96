@@ -27,7 +27,7 @@ public class Driver extends User {
 		this.Gender = Gender;
 		this.UserName = UserName;
 		this.PassWord = PassWord;
-		this.StuNum = StuNum;
+		this.StuNumber = StuNum;
 		this.NationalNum = NationalNum;
 		this.Car = Car;
 
@@ -70,7 +70,7 @@ public class Driver extends User {
 	}
 
 	public int getStuNUm() {
-		return this.StuNum;
+		return this.StuNumber;
 	}
 
 	public int getNationalNum() {
