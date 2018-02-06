@@ -1,7 +1,9 @@
 package users;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({"FirstName","LastName","UserName","PassWord","StuNum","NationalNum","Gender","id","Role"})
 public class User {
 	
 	protected String FirstName;
@@ -12,10 +14,10 @@ public class User {
 	protected int NationalNum;
 	protected String Gender;
 	protected int id;
-	protected static int Role;
+	protected int Role;
 	
 
-	// ************************************************** Getters ***************************************************
+	// ***************************************************** Getters **********************************************************
 
 	public String getFirstName() {
 		return this.FirstName;
@@ -50,8 +52,8 @@ public class User {
 	}
 	
 	
-//	********************************************* Setters *******************************************************
-	
+//	******************************************************* Setters *************************************************************
+	@JsonProperty("id")
 	public void setId(int id) {
 		
 		this.id = id;
@@ -102,7 +104,6 @@ public class User {
 		this.Gender= gender;
 		
 	}
-	
 	
 	
 }

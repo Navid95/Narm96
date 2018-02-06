@@ -1,7 +1,5 @@
 package users;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Passenger extends User {
 
 	// Constructor

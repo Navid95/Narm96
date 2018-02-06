@@ -1,7 +1,5 @@
 package DAOs;
 
-import java.sql.SQLException;
-
 import users.Passenger;
 
 public interface Passenger_DAO {
@@ -15,5 +13,7 @@ public interface Passenger_DAO {
 	
 	public Passenger EditInfo(String FirstName, String LastName, String UserName, String PassWord, int StuNum,
 			int NationalNum, String Gender , int id);
+	
+	public Boolean Delete(int id);
 
 }

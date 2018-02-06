@@ -1,9 +1,6 @@
 package DAO_Implementation;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.sql.Statement;
 import DAOs.Passenger_DAO;
@@ -12,6 +9,7 @@ import users.Passenger;
 
 public class Passenger_DAO_Implementation implements Passenger_DAO {
 
+	
 	public Passenger_DAO_Implementation() throws ClassNotFoundException, SQLException {
 		new mysql_Connection();
 	}
@@ -292,6 +290,37 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 		}
 		
 		return passenger;
+	}
+	
+	// *********************************************************************************************************
+	
+	public Boolean Delete(int id) {
+		
+		String sql;
+		
+		sql = "DELETE FROM `passenger` WHERE `passenger`.`ID` = "+id+";";
+		
+		int result = -1;
+		
+		try {
+			
+			result = mysql_Connection.stmt.executeUpdate(sql);
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+			return false;
+		}
+		
+		if (result != 1) {
+			
+			return false;
+			
+		}
+		
+		return true;
+		
 	}
 	
 }
