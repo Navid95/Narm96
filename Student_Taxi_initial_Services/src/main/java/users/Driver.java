@@ -47,39 +47,11 @@ public class Driver extends User {
 	public void ChoosePassenger() {
 	}
 
+	
+	
 	// Getters
 
-	public String getFirstName() {
-		return this.FirstName;
-	}
 
-	public String getLastName() {
-		return this.LastName;
-	}
-
-	public String getUserName() {
-		return this.UserName;
-	}
-
-	public String getPassWord() {
-		return this.PassWord;
-	}
-
-	public String getGender() {
-		return this.Gender;
-	}
-
-	public int getStuNUm() {
-		return this.StuNum;
-	}
-
-	public int getNationalNum() {
-		return this.NationalNum;
-	}
-
-	public int getId() {
-		return this.id;
-	}
 
 	public String getCar() {
 		return this.Car;

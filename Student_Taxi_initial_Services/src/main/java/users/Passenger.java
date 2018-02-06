@@ -5,8 +5,15 @@ public class Passenger extends User {
 	// Constructor
 	public Passenger(String FirstName, String LastName, String UserName, String PassWord, int StuNum, int NationalNum,
 			String Gender) {
+		
 		this.Role = 1;
+		
 		this.EditInfo(FirstName, LastName, UserName, PassWord, StuNum, NationalNum, Gender);
+		
+	}
+	
+	public Passenger() {
+		// TODO Auto-generated constructor stub
 	}
 
 	// Functions
@@ -36,41 +43,6 @@ public class Passenger extends User {
 	public void RateTrip() {
 	}
 
-	// Getters
-
-	public String getFirstName() {
-		return this.FirstName;
-	}
-
-	public String getLastName() {
-		return this.LastName;
-	}
-
-	public String getUserName() {
-		return this.UserName;
-	}
-
-	public String getPassWord() {
-		return this.PassWord;
-	}
-
-	public String getGender() {
-		return this.Gender;
-	}
-
-	public int getStuNUm() {
-		return this.StuNum;
-	}
-
-	public int getNationalNum() {
-		return this.NationalNum;
-	}
-
-	public int getId() {
-		return this.id;
-	}
 	
-	public void setId(int id) {
-		this.id = id;
-	}
+
 }
