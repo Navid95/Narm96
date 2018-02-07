@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import DAO_Implementation.Car_DAO_Implementation;
 import DAOs.Car_DAO;
 import users.Car;
-import users.Passenger;
 
 @Path("Car")
 public class CarServices {
@@ -67,5 +66,92 @@ public class CarServices {
 		
 		return JsonData;
 	}
+	
+	// *********************************************** Services *******************************************************
+	
+	@GET
+	@Path("Show{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String Show(@PathParam("id") String id) {
+		
+		int user_id = Integer.parseInt(id);
+		
+		System.out.println(""+user_id);
+		
+		Car car;
+		
+		car = carDAO.Show(user_id);
+		
+	if(car==null) {
+			
+			return Error;
+		}
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		String ShowData=null;
+		
+		try {
+			ShowData = mapper.writeValueAsString(car);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return ShowData;
+	}
+
+	// *********************************************** Services *******************************************************
+	
+	@GET
+	@Path("EditInfo%21{CarName}%2C{SitNum}%2C{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String EditInfo(@PathParam("CarName") String CarName, @PathParam("SitNum") int SitNum ,@PathParam("id") int id ) {
+		
+		Car car;
+		
+		car = carDAO.EditInfo(CarName, SitNum , id);
+		
+		if(car == null) {
+			
+			return Error;
+		}
+				
+		ObjectMapper mapper = new ObjectMapper();
+		
+		String JsonData = null;
+		
+		try {
+			
+			JsonData = mapper.writeValueAsString(car);
+			
+		} catch (JsonProcessingException e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+		return JsonData;
+	}
+	
+	//************************************************************************************************************
+	
+	
+		@GET
+		@Path("Delete{ID}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public String Delete(@PathParam("ID") String id) {
+			
+			
+			boolean report;
+			 
+			report=carDAO.Delete(Integer.parseInt(id));
+			
+			if(report==true) {
+				return "delete is successfull.";
+			}
+			
+			
+				return "delete failed."; 
+		}
 
 }

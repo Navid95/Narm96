@@ -35,6 +35,32 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 			mysql_Connection.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			mysql_Connection.rs = mysql_Connection.stmt.getGeneratedKeys();
 			mysql_Connection.conn.commit();
+			
+
+			int autoIncKeyFromApi = -1;
+
+
+			if (mysql_Connection.rs.next()) {
+
+				autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
+
+			} else {
+
+				System.out.println("No id returned");
+				
+			}
+
+			if (autoIncKeyFromApi != -1) {
+
+				passenger.setId(autoIncKeyFromApi);
+
+				return passenger;
+
+			} else {
+
+				return null;
+
+			}
 
 		} catch (SQLException e) {
 
@@ -54,40 +80,6 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 			e.printStackTrace();
 
 			return null;
-		}
-
-		int autoIncKeyFromApi = -1;
-
-		try {
-
-			if (mysql_Connection.rs.next()) {
-
-				autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
-
-			} else {
-
-				System.out.println("No id returned");
-
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-
-			return null;
-
-		}
-
-		if (autoIncKeyFromApi != -1) {
-
-			passenger.setId(autoIncKeyFromApi);
-
-			return passenger;
-
-		} else {
-
-			return null;
-
 		}
 
 	}
@@ -110,6 +102,35 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 			mysql_Connection.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			mysql_Connection.rs = mysql_Connection.stmt.getGeneratedKeys();
 			mysql_Connection.conn.commit();
+			
+//			passenger = new Passenger(FirstName, LastName, UserName, PassWord, StuNum, NationalNum, Gender);
+
+			int autoIncKeyFromApi = -1;
+
+			if (mysql_Connection.rs.next()) {
+
+				autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
+
+			} else {
+
+				System.out.println("No id returned");
+					
+				return null;
+					
+			}
+
+			if (autoIncKeyFromApi != -1) {
+
+//				passenger.setId(autoIncKeyFromApi);
+				passenger = Show(autoIncKeyFromApi);
+
+				return passenger;
+
+			} else {
+
+				return null;
+
+			}
 
 		} catch (SQLException e) {
 
@@ -129,44 +150,6 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 			e.printStackTrace();
 
 			return null;
-		}
-
-		passenger = new Passenger(FirstName, LastName, UserName, PassWord, StuNum, NationalNum, Gender);
-
-		int autoIncKeyFromApi = -1;
-
-		try {
-
-			if (mysql_Connection.rs.next()) {
-
-				autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
-
-			} else {
-
-				System.out.println("No id returned");
-				
-				return null;
-				
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-
-			return null;
-
-		}
-
-		if (autoIncKeyFromApi != -1) {
-
-			passenger.setId(autoIncKeyFromApi);
-
-			return passenger;
-
-		} else {
-
-			return null;
-
 		}
 
 	}
@@ -187,6 +170,28 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 			mysql_Connection.rs = mysql_Connection.stmt.executeQuery(sql);
 			
 			mysql_Connection.conn.commit();
+			
+			mysql_Connection.rs.next();
+			
+			passenger = new Passenger();
+			
+			passenger.setFirstName(mysql_Connection.rs.getString("FirstName"));
+			
+			passenger.setLastName(mysql_Connection.rs.getString("LastName"));
+			
+			passenger.setUserName(mysql_Connection.rs.getString("UserName"));
+			
+			passenger.setPassWord(mysql_Connection.rs.getString("PassWord"));
+			
+			passenger.setStuNum(Integer.parseInt(mysql_Connection.rs.getString("StuNum")));
+			
+			passenger.setNationalNum(Integer.parseInt(mysql_Connection.rs.getString("NationalNum")));
+			
+			passenger.setGender(mysql_Connection.rs.getString("Gender"));
+			
+			passenger.setId(id);
+			
+			return passenger;
 
 		} catch (SQLException e) {
 
@@ -207,37 +212,6 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 
 			return null;
 		}
-		
-		passenger = new Passenger();
-		
-		try {
-			
-			mysql_Connection.rs.next();
-			
-			passenger.setFirstName(mysql_Connection.rs.getString("FirstName"));
-			
-			passenger.setLastName(mysql_Connection.rs.getString("LastName"));
-			
-			passenger.setUserName(mysql_Connection.rs.getString("UserName"));
-			
-			passenger.setPassWord(mysql_Connection.rs.getString("PassWord"));
-			
-			passenger.setStuNum(Integer.parseInt(mysql_Connection.rs.getString("StuNum")));
-			
-			passenger.setNationalNum(Integer.parseInt(mysql_Connection.rs.getString("NationalNum")));
-			
-			passenger.setGender(mysql_Connection.rs.getString("Gender"));
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			return null;
-			
-		}
-		
-		passenger.setId(id);
-		
-		return passenger;
 
 	}
 	
@@ -274,6 +248,8 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 			passenger.setNationalNum(NationalNum);
 			
 			passenger.setGender(Gender);
+			
+			passenger.setId(id);
 			
 			
 		} catch (SQLException e) {
