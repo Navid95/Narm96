@@ -3,6 +3,7 @@ package com.Student_Taxi_initial_Services;
 import javax.ws.rs.PathParam;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.persistence.PreUpdate;
 import javax.ws.rs.GET;
@@ -28,7 +29,7 @@ public class PassengerServices {
 	
 	public PassengerServices() {
 		try {
-			passengerDAO= new Passenger_DAO_Implementation();
+			passengerDAO = new Passenger_DAO_Implementation();
 		} catch (ClassNotFoundException | SQLException e) {
 			Error = "error";
 			e.printStackTrace();
@@ -163,6 +164,38 @@ public class PassengerServices {
 			return "delete failed."; 
 		
 		
+	}
+	
+	//************************************************************************************************************
+
+	@GET
+	@Path("showAllPassenger%20{offset}%20{rownum}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String showalls(@PathParam("offset") String offset, @PathParam("rownum") String row) {
+		
+		List<Passenger> list;
+
+		list=passengerDAO.showAll(Integer.parseInt(offset),Integer.parseInt(row));
+	
+		
+		if(list==null) {
+				
+				return Error;
+			}
+			
+	ObjectMapper mapper = new ObjectMapper();
+		
+
+		String listData = null;
+		try {
+			listData = mapper.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+			return listData;
+		
+	
 	}
 	
 	

@@ -21,7 +21,7 @@ public class mysql_Connection {
 	public static final String USER = "root";
 	public static final String PASS = "abcd";
 	
-	public mysql_Connection() throws ClassNotFoundException, SQLException {
+	public  mysql_Connection() throws ClassNotFoundException, SQLException {
 		
 		Class.forName("com.mysql.jdbc.Driver");
 		conn = DriverManager.getConnection(DB_URL, USER, PASS);

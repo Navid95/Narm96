@@ -1,42 +1,55 @@
 package Trip;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Trip {
 
-	private String Payment;
+	private int id;
+	
+	private Payment Payment;
+
 	private Location Location;
-	private Rate Rate;
+	
+	private int Sits;
 
-	public Trip(Location Location) {
-		this.Location = Location;
+	public Trip() {
 	}
 
-	private void EditTrip(String Payment, Location Location) {
-		this.Location = Location;
-		this.Payment = Payment;
-	}
+	public Trip(Location Location , int sits) {
 
-	public String getPayment() {
+		this.Location = Location;
+		this.Sits = sits;
+
+	}
+	
+	public int getSits() {
+		return this.Sits;
+	}
+	
+	public Payment getPayment() {
+
 		return Payment;
-	}
-
-	public void setPayment(String payment) {
-		Payment = payment;
 	}
 
 	public Location getLocation() {
 		return Location;
 	}
+	
+	@JsonProperty("Sits")
+	public void setSits(int sits) {
+		Sits = sits;
+	}
+	
+	@JsonProperty("Payment")
+	public void setPayment(Payment payment) {
 
+		Payment = payment;
+
+	}
+
+	@JsonProperty("Location")
 	public void setLocation(Location location) {
 		Location = location;
-	}
-
-	public Rate getRate() {
-		return Rate;
-	}
-
-	public void setRate(Rate rate) {
-		Rate = rate;
 	}
 
 }

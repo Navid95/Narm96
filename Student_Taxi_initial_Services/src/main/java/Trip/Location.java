@@ -2,59 +2,58 @@ package Trip;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Location {
+
+	private int id;
+	private String Origin;
+	private String Destination;
 	
-	private ArrayList<String> arraylist ;
-	int a;
+
+//	******************************** Constructors ********************************************************
 	
+	public Location() {}
 	
-	public Location(String Origin,String Destination ) {
+	public Location(String origin , String destination) {
 		
-		arraylist = new ArrayList<String>();
-		arraylist.add(Origin);
-		arraylist.add(Destination);
+		this.Origin = origin;
+		
+		this.Destination = destination;
 		
 	}
+
+//	******************************************** Setters *******************************************
 	
-	
-	
-	public void AddNode (String city) {
+	@JsonProperty("Origin")
+	public void setOrigin(String origin) {
 		
-		arraylist.add(arraylist.size()-1, city);
+		Origin = origin;
 	}
 	
-	public void DeletNode(int arg) {
-		arraylist.remove(arg);
-	}
-	public void DeletNode(String city) {
-		arraylist.forEach(node -> {
-			
-			System.out.println(node);
-			
-			if(node.equals(city)) {			
-				a = arraylist.indexOf(node);
-			}
-				
-		});
+	@JsonProperty("Destination")
+	public void setDestination(String destination) {
 		
-		DeletNode(a);
-	}
-	
-	public void EditOrigin (String Origin) {
-		
-		arraylist.remove(0);
-		arraylist.add(0, Origin);
+		Destination = destination;
 		
 	}
 	
-	public void EditDestination (String Destination) {
+//	******************************************** Getters *******************************************
+
+	public String getOrigin() {
 		
-		arraylist.add(arraylist.size(),Destination);
-		arraylist.remove(arraylist.size()-2);
+		return Origin;
+		
 	}
 	
-	public ArrayList<String> getArrayList (){
-		return this.arraylist;
-	}
- 
+	public String getDestination() {
+		
+		return Destination;
+		
+	}	
+
+	
+	
+	
+
 }

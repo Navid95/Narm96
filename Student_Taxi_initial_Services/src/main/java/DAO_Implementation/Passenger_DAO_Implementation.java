@@ -340,7 +340,7 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 		
 		List<Passenger> passengers = new ArrayList<Passenger>();
 		
-		sql = "SELECT * FROM `passenger` LIMIT"+offset+","+rowNum+";";
+		sql = "SELECT * FROM `passenger` LIMIT "+offset+","+rowNum+" ;";
 		
 		try {
 			
@@ -396,5 +396,6 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 		return passengers;
 		
 	}
+	
 	
 }
