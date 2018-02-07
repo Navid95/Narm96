@@ -72,13 +72,12 @@ public class PassengerServices {
 	@GET
 	@Path("Show{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String Show(@PathParam("id") String id) {
+	public String Show(@PathParam("id") int id) {
 		
-		int user_id = Integer.parseInt(id);
 		
 		Passenger passenger;
 		
-		passenger = passengerDAO.Show(user_id);
+		passenger = passengerDAO.Show(id);
 		
 	if(passenger==null) {
 			

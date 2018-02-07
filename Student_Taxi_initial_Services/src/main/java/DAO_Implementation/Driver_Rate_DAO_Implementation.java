@@ -6,7 +6,6 @@ import java.sql.Statement;
 import DAOs.Driver_Rate_DAO;
 import DataBase_Connection.mysql_Connection;
 import users.Driver_Rate;
-import users.Passenger;
 import users.Rate;
 
 public class Driver_Rate_DAO_Implementation implements Driver_Rate_DAO {

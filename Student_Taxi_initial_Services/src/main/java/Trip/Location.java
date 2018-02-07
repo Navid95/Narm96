@@ -1,7 +1,5 @@
 package Trip;
 
-import java.util.ArrayList;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Location {
@@ -25,6 +23,7 @@ public class Location {
 
 //	******************************************** Setters *******************************************
 	
+	
 	@JsonProperty("Origin")
 	public void setOrigin(String origin) {
 		
@@ -35,6 +34,13 @@ public class Location {
 	public void setDestination(String destination) {
 		
 		Destination = destination;
+		
+	}
+	
+	@JsonProperty("id")
+	public void setId(int id) {
+		
+		this.id = id;
 		
 	}
 	
@@ -50,10 +56,10 @@ public class Location {
 		
 		return Destination;
 		
-	}	
+	}
 
-	
-	
-	
+	public int getId() {
+		return id;
+	}
 
 }
