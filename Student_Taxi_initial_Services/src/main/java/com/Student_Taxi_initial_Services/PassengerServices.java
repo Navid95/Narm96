@@ -43,26 +43,20 @@ public class PassengerServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String CreateNew(@PathParam("FirstName") String FirstName, @PathParam("LastName") String LastName,
 			@PathParam("Gender") String Gender, @PathParam("UserName") String UserName,
-			@PathParam("PassWord") String PassWord, @PathParam("StuNum") String StuNum,
-			@PathParam("NationalNum") String NationalNum) {
-		
+			@PathParam("PassWord") String PassWord, @PathParam("StuNum") int StuNum,
+			@PathParam("NationalNum") int NationalNum) {
 		
 		Passenger passenger;
 		
-		System.out.println("Passenger created...\nSaving to Data Base");
-		
-		passenger = passengerDAO.CreateNew(FirstName, LastName, UserName, PassWord, Integer.parseInt(StuNum),
-				Integer.parseInt(NationalNum), Gender);
+		passenger = passengerDAO.CreateNew(FirstName, LastName, UserName, PassWord, StuNum,
+				NationalNum, Gender);
 		
 		if(passenger==null) {
 			
 			return Error;
 		}
 		
-//		System.out.println("Retrieved ID : " + ((Passenger) user1).getFirstName());
-		
 		ObjectMapper mapper = new ObjectMapper();
-//		mapper.enableDefaultTyping();
 		
 		String JsonData = null;
 		try {
@@ -76,13 +70,11 @@ public class PassengerServices {
 	
 //	********************************************************************************************************
 	@GET
-	@Path("show{id}")
+	@Path("Show{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String Show(@PathParam("id") String id) {
 		
 		int user_id = Integer.parseInt(id);
-		
-		System.out.println(""+user_id);
 		
 		Passenger passenger;
 		
@@ -114,28 +106,30 @@ public class PassengerServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String EditInfo(@PathParam("FirstName")String Firstname, @PathParam("LastName")String lastname,
 			@PathParam("Gender")String gender,@PathParam("UserName")String username,@PathParam("PassWord")String password,
-			@PathParam("StuNum")String stunum,@PathParam("NationalNum")String nationalnum,@PathParam("ID")String id) {
+			@PathParam("StuNum")int stunum,@PathParam("NationalNum")int nationalnum,@PathParam("ID")int id) {
 	
 		Passenger passenger;
 		
-		passenger = passengerDAO.EditInfo(Firstname, lastname, username, password,Integer.parseInt(stunum) ,Integer.parseInt(nationalnum) , gender,Integer.parseInt(id));
+		passenger = passengerDAO.EditInfo(Firstname, lastname, username, password,stunum ,nationalnum , gender,id);
 	
 		
-	if(passenger==null) {
+		if(passenger==null) {
 			
 			return Error;
 		}
 		
-		
-		
 		ObjectMapper mapper = new ObjectMapper();
 		
-
 		String EditData = null;
+		
 		try {
+			
 			EditData = mapper.writeValueAsString(passenger);
+			
 		} catch (JsonProcessingException e) {
+			
 			e.printStackTrace();
+			
 		}
 		
 		return EditData;
@@ -143,12 +137,10 @@ public class PassengerServices {
 	
 //************************************************************************************************************
 	
-	
 	@GET
 	@Path("Delete{ID}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String Delete(@PathParam("ID") String id) {
-		
 		
 		boolean report;
 		 
@@ -158,9 +150,7 @@ public class PassengerServices {
 			return "delete is successfull.";
 		}
 		
-		
 			return "delete failed."; 
-		
 		
 	}
 	

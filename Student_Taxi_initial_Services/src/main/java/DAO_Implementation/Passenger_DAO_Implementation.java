@@ -52,7 +52,7 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 
 			if (autoIncKeyFromApi != -1) {
 
-				passenger.setId(autoIncKeyFromApi);
+				passenger = Show(autoIncKeyFromApi);
 
 				return passenger;
 
@@ -235,22 +235,7 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 			
 			mysql_Connection.conn.commit();
 			
-			passenger.setFirstName(FirstName);
-			
-			passenger.setLastName(LastName);
-			
-			passenger.setUserName(UserName);
-			
-			passenger.setPassWord(PassWord);
-			
-			passenger.setStuNum(StuNum);
-			
-			passenger.setNationalNum(NationalNum);
-			
-			passenger.setGender(Gender);
-			
-			passenger.setId(id);
-			
+			passenger = Show(id);
 			
 		} catch (SQLException e) {
 
