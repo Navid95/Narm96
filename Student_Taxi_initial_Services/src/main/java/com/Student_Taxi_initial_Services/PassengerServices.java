@@ -24,8 +24,8 @@ import users.User;
 @Path("Passenger")
 public class PassengerServices {
 	
-	public Passenger_DAO passengerDAO ;
-	public String Error; 
+	private Passenger_DAO passengerDAO ;
+	private String Error; 
 	
 	public PassengerServices() {
 		try {
@@ -92,8 +92,6 @@ public class PassengerServices {
 			
 			return Error;
 		}
-		
-		
 		
 		ObjectMapper mapper = new ObjectMapper();
 		

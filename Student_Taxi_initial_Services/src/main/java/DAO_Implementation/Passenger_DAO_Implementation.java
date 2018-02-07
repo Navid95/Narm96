@@ -20,7 +20,7 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 	
 	// *********************************************************************************************************
 
-	
+	@Override
 	public Passenger CreateNew(Passenger passenger) {
 
 		String sql;
@@ -93,7 +93,7 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 	}
 
 	// *********************************************************************************************************
-
+	@Override
 	public Passenger CreateNew(String FirstName, String LastName, String UserName, String PassWord, int StuNum,
 			int NationalNum, String Gender) {
 
@@ -172,7 +172,7 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 	}
 
 	// *********************************************************************************************************
-
+	@Override
 	public Passenger Show(int id) {
 
 		String sql;
@@ -242,7 +242,7 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 	}
 	
 	// *********************************************************************************************************
-	
+	@Override
 	public Passenger EditInfo(String FirstName, String LastName, String UserName, String PassWord, int StuNum,
 			int NationalNum, String Gender , int id) {
 		
@@ -300,8 +300,8 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 	}
 	
 	// *********************************************************************************************************
-	
-	public Boolean Delete(int id) {
+	@Override
+	public boolean Delete(int id) {
 		
 		String sql;
 		
@@ -333,7 +333,7 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 	}
 	
 	// *********************************************************************************************************
-	
+	@Override
 	public List<Passenger> showAll(int offset , int rowNum){
 		
 		String sql;

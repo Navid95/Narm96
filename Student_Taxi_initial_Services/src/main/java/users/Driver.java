@@ -39,6 +39,10 @@ public class Driver extends User {
 		this.Car = Car;
 
 	}
+	
+	public void addTrip(Trip trip) {
+		this.Trips.add(trip);
+	}
 
 	public void CreateTrip() {
 	}

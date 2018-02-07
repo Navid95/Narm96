@@ -16,7 +16,7 @@ public interface Passenger_DAO {
 	public Passenger EditInfo(String FirstName, String LastName, String UserName, String PassWord, int StuNum,
 			int NationalNum, String Gender , int id);
 	
-	public Boolean Delete(int id);
+	public boolean Delete(int id);
 	
 	public List<Passenger> showAll(int offset , int rowNum);
 

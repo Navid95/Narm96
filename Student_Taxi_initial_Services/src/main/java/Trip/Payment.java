@@ -16,7 +16,11 @@ public class Payment {
 
 	}
 	
-
+	@JsonProperty("id")
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	@JsonProperty("State")
 	public void setState(boolean state) {
 		
@@ -31,6 +35,12 @@ public class Payment {
 		
 	}
 
+	public int getId() {
+		
+		return this.id;
+		
+	}
+	
 	public boolean getState() {
 
 		return this.State;

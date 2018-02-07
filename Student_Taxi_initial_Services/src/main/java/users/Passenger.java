@@ -1,7 +1,15 @@
 package users;
 
-public class Passenger extends User {
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import Trip.Trip;
+
+public class Passenger extends User {
+	
+	private List<Trip> Trips;
+	
 	// Constructor
 	public Passenger(String FirstName, String LastName, String UserName, String PassWord, int StuNum, int NationalNum,
 			String Gender) {
@@ -13,7 +21,6 @@ public class Passenger extends User {
 	}
 	
 	public Passenger() {
-		// TODO Auto-generated constructor stub
 	}
 
 	// Functions
@@ -30,6 +37,10 @@ public class Passenger extends User {
 		this.NationalNum = NationalNum;
 		
 	}
+	
+	public void addTrip(Trip trip) {
+		this.Trips.add(trip);
+	}
 
 	public void SearchTrip() {
 	}
@@ -41,6 +52,15 @@ public class Passenger extends User {
 	}
 
 	public void RateTrip() {
+	}
+	
+	public List<Trip> getTrips() {
+		return this.Trips;
+	}
+	
+	@JsonProperty("Trips")
+	public void setTrips(List<Trip> trips) {
+		Trips = trips;
 	}
 
 	
