@@ -29,12 +29,21 @@ public class Car {
 		SitNum = sitNum;
 	}
 	
+	@JsonProperty("id")
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getCarName() {
 		return CarName;
 	}
 	
 	public int getSitNum() {
 		return SitNum;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 }

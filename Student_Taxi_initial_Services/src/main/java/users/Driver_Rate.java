@@ -17,11 +17,18 @@ public class Driver_Rate {
 		return Rate;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 	@JsonProperty("Rate")
 	public void setRate(Rate rate) {
 		Rate = rate;
 	}
 	
-	
+	@JsonProperty("id")
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 }
