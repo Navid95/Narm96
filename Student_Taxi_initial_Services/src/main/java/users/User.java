@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"FirstName","LastName","UserName","PassWord","StuNum","NationalNum","Gender","id","Role"})
 public class User {
 	
+	public User() {
+	}
+	
 	protected String FirstName;
 	protected String LastName;
 	protected String UserName;
@@ -45,6 +48,10 @@ public class User {
 
 	public int getNationalNum() {
 		return this.NationalNum;
+	}
+	
+	public int getRole() {
+		return Role;
 	}
 
 	public int getId() {
@@ -105,5 +112,9 @@ public class User {
 		
 	}
 	
+	@JsonProperty("Role")
+	public void setRole(int role) {
+		Role = role;
+	}
 	
 }

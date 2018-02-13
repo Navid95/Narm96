@@ -2,6 +2,8 @@ package DAO_Implementation;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import DAOs.Payment_DAO;
 import DataBase_Connection.mysql_Connection;
@@ -10,25 +12,56 @@ import users.Passenger;
 
 public class Payment_DAO_Implementation implements Payment_DAO {
 
+	private mysql_Connection mysql_Connection;
 	
 	public Payment_DAO_Implementation() throws ClassNotFoundException, SQLException {
-		new mysql_Connection();
+		mysql_Connection = new mysql_Connection();
 	}
 	
 	// *********************************************************************************************************
 	
 	@Override
-	public Payment CreateNew(Payment payment) {
+	public Payment CreateNewEmpty() {
 		
 		String sql;
 		
-		sql = "INSERT INTO payment (State , Price) VALUES ("+payment.getState()+" , "+payment.getPrice()+");";
+		Payment payment;
+		
+		sql = "INSERT INTO `payment` (`ID`, `State`, `Price`) VALUES (NULL, NULL, NULL);";
 
 		try {
 
 			mysql_Connection.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			mysql_Connection.rs = mysql_Connection.stmt.getGeneratedKeys();
 			mysql_Connection.conn.commit();
+
+			int autoIncKeyFromApi = -1;
+			
+			if (mysql_Connection.rs.next()) {
+
+				autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
+				
+				if (autoIncKeyFromApi != -1) {
+					
+					payment = new Payment();
+
+					payment.setId(autoIncKeyFromApi);
+
+					return payment;
+
+				} else {
+
+					return null;
+
+				}
+
+			} else {
+
+				System.out.println("No id returned");
+				
+				return null;
+
+			}
 
 		} catch (SQLException e) {
 
@@ -48,40 +81,6 @@ public class Payment_DAO_Implementation implements Payment_DAO {
 			e.printStackTrace();
 
 			return null;
-		}
-
-		int autoIncKeyFromApi = -1;
-
-		try {
-
-			if (mysql_Connection.rs.next()) {
-
-				autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
-
-			} else {
-
-				System.out.println("No id returned");
-
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-
-			return null;
-
-		}
-
-		if (autoIncKeyFromApi != -1) {
-
-			payment.setId(autoIncKeyFromApi);
-
-			return payment;
-
-		} else {
-
-			return null;
-
 		}
 
 	}
@@ -101,6 +100,31 @@ public class Payment_DAO_Implementation implements Payment_DAO {
 			mysql_Connection.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			mysql_Connection.rs = mysql_Connection.stmt.getGeneratedKeys();
 			mysql_Connection.conn.commit();
+			
+			int autoIncKeyFromApi = -1;
+
+			if (mysql_Connection.rs.next()) {
+
+				autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
+				
+				if (autoIncKeyFromApi != -1) {
+					
+					payment = Show(autoIncKeyFromApi);
+
+					return payment;
+
+				} else {
+
+					return null;
+
+				}
+
+			} else {
+
+				System.out.println("No id returned");
+				
+				return null;
+			}
 
 		} catch (SQLException e) {
 
@@ -121,43 +145,7 @@ public class Payment_DAO_Implementation implements Payment_DAO {
 
 			return null;
 		}
-
-		int autoIncKeyFromApi = -1;
-
-		try {
-
-			if (mysql_Connection.rs.next()) {
-
-				autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
-
-			} else {
-
-				System.out.println("No id returned");
-
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-
-			return null;
-
-		}
-
-		if (autoIncKeyFromApi != -1) {
-			
-			payment = new Payment();
-			payment.setPrice(Price);
-			payment.setState(State);
-			payment.setId(autoIncKeyFromApi);
-
-			return payment;
-
-		} else {
-
-			return null;
-
-		}
+		
 	}
 
 	// *********************************************************************************************************
@@ -176,6 +164,16 @@ public class Payment_DAO_Implementation implements Payment_DAO {
 			mysql_Connection.rs = mysql_Connection.stmt.executeQuery(sql);
 			
 			mysql_Connection.conn.commit();
+			
+			mysql_Connection.rs.next();
+			
+			payment = new Payment();
+			payment.setPrice(mysql_Connection.rs.getDouble("Price"));
+			payment.setState(mysql_Connection.rs.getBoolean("State"));
+			payment.setId(id);
+			
+			return payment;
+
 
 		} catch (SQLException e) {
 
@@ -196,27 +194,6 @@ public class Payment_DAO_Implementation implements Payment_DAO {
 
 			return null;
 		}
-		
-		payment = new Payment();
-		
-		try {
-			
-			mysql_Connection.rs.next();
-			
-			payment.setPrice(mysql_Connection.rs.getDouble("Price"));
-			payment.setState(mysql_Connection.rs.getBoolean("State"));
-			
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			return null;
-			
-		}
-		
-		payment.setId(id);
-		
-		return payment;
 		
 	}
 
@@ -242,6 +219,8 @@ public class Payment_DAO_Implementation implements Payment_DAO {
 			
 			payment = Show(id);
 			
+			return payment;
+			
 		} catch (SQLException e) {
 
 			if (mysql_Connection.conn != null || count == -1000 || count < 1)
@@ -261,8 +240,6 @@ public class Payment_DAO_Implementation implements Payment_DAO {
 
 			return null;
 		}
-		
-		return payment;
 		
 	}
 
@@ -337,6 +314,12 @@ public class Payment_DAO_Implementation implements Payment_DAO {
 				
 				mysql_Connection.conn.commit();
 				
+				if (result != 1) {
+					
+					return false;
+					
+				}
+				
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
@@ -344,13 +327,55 @@ public class Payment_DAO_Implementation implements Payment_DAO {
 				return false;
 			}
 			
-			if (result != 1) {
-				
-				return false;
-				
-			}
-			
 			return true;
 		}
-	
+		
+//	**************************************************************************************************
+		
+		public List<Payment> SearchFalseStates(){
+			
+			String sql;
+			
+			sql = "SELECT * FROM `payment` WHERE `State`= false;";
+			
+			List<Payment> payments;
+			
+			try {
+				
+				mysql_Connection.rs = mysql_Connection.stmt.executeQuery(sql);
+				
+				mysql_Connection.conn.commit();
+				
+				payments = new ArrayList<Payment>();
+				
+				while (mysql_Connection.rs.next()) {
+					
+					Payment payment = new Payment();
+					payment = Show(mysql_Connection.rs.getInt("ID"));
+					
+					payments.add(payment);
+				}
+				
+				return payments;
+
+			} catch (SQLException e) {
+
+				if (mysql_Connection.conn != null)
+
+					try {
+
+						mysql_Connection.conn.rollback();
+
+					} catch (SQLException e1) {
+
+						e1.printStackTrace();
+
+						return null;
+					}
+
+				e.printStackTrace();
+
+				return null;
+			}
+		}
 }

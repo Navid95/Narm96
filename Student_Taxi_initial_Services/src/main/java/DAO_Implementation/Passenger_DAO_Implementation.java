@@ -6,62 +6,63 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
+
 import DAOs.Passenger_DAO;
+import DAOs.Trip_DAO;
 import DataBase_Connection.mysql_Connection;
+import Trip.Location;
+import Trip.Trip;
 import users.Passenger;
 
 public class Passenger_DAO_Implementation implements Passenger_DAO {
 
+	private mysql_Connection mysql_Connection;
+	private Trip_DAO trip_DAO;
 	
 	public Passenger_DAO_Implementation() throws ClassNotFoundException, SQLException {
-		new mysql_Connection();
+		mysql_Connection = new mysql_Connection();
+		trip_DAO = new Trip_DAO_Implementation();
 	}
 
 	
 	// *********************************************************************************************************
-
+	
 	@Override
-	public Passenger CreateNew(Passenger passenger) {
-
+	public int NewPassenger() {
+		
 		String sql;
 
-		sql = "INSERT INTO `passenger`( `FirstName`, `LastName`, `Gender`, `UserName`, `PassWord`, `StuNum`, `NationalNum`)"
-				+ " VALUES ('" + passenger.getFirstName() + "','" + passenger.getLastName() + "','"
-				+ passenger.getGender() + "'," + "'" + passenger.getUserName() + "','" + passenger.getPassWord() + "',"
-				+ passenger.getStuNum() + "," + passenger.getNationalNum() + ")";
+		sql = "INSERT INTO `passenger` (`passenger_id`) VALUES (NULL);";
 
 		try {
 
 			mysql_Connection.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			mysql_Connection.rs = mysql_Connection.stmt.getGeneratedKeys();
 			mysql_Connection.conn.commit();
-			
 
 			int autoIncKeyFromApi = -1;
-
 
 			if (mysql_Connection.rs.next()) {
 
 				autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
+				
+				if (autoIncKeyFromApi != -1) {
+
+					return autoIncKeyFromApi;
+
+				} else {
+
+					return -1;
+
+				}
 
 			} else {
 
 				System.out.println("No id returned");
+				return -1;
 				
 			}
-
-			if (autoIncKeyFromApi != -1) {
-
-				passenger = Show(autoIncKeyFromApi);
-
-				return passenger;
-
-			} else {
-
-				return null;
-
-			}
-
 		} catch (SQLException e) {
 
 			if (mysql_Connection.conn != null)
@@ -74,87 +75,51 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 
 					e1.printStackTrace();
 
-					return null;
+					return -1;
 				}
 
 			e.printStackTrace();
 
-			return null;
+			return -1;
 		}
 
 	}
-
+	
 	// *********************************************************************************************************
-	@Override
-	public Passenger CreateNew(String FirstName, String LastName, String UserName, String PassWord, int StuNum,
-			int NationalNum, String Gender) {
-
-		String sql;
-
-		Passenger passenger;
-
-		sql = "INSERT INTO `passenger`( `FirstName`, `LastName`, `Gender`, `UserName`, `PassWord`, `StuNum`, `NationalNum`)"
-				+ " VALUES ('" + FirstName + "','" + LastName + "','" + Gender + "'," + "'" + UserName + "','"
-				+ PassWord + "'," + StuNum + "," + NationalNum + ")";
-
-		try {
-
-			mysql_Connection.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-			mysql_Connection.rs = mysql_Connection.stmt.getGeneratedKeys();
-			mysql_Connection.conn.commit();
+		@Override
+		public boolean DeletePassenger(int passenger_id) {
 			
-//			passenger = new Passenger(FirstName, LastName, UserName, PassWord, StuNum, NationalNum, Gender);
-
-			int autoIncKeyFromApi = -1;
-
-			if (mysql_Connection.rs.next()) {
-
-				autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
-
-			} else {
-
-				System.out.println("No id returned");
-					
-				return null;
-					
+			String sql;
+			
+			sql = "DELETE FROM `passenger` WHERE passenger_id = "+passenger_id+";";
+			
+			int result = -1;
+			
+			try {
+				
+				result = mysql_Connection.stmt.executeUpdate(sql);
+				
+				mysql_Connection.conn.commit();
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				
+				return false;
 			}
-
-			if (autoIncKeyFromApi != -1) {
-
-//				passenger.setId(autoIncKeyFromApi);
-				passenger = Show(autoIncKeyFromApi);
-
-				return passenger;
-
-			} else {
-
-				return null;
-
+			
+			if (result != 1) {
+				
+				return false;
+				
 			}
-
-		} catch (SQLException e) {
-
-			if (mysql_Connection.conn != null)
-
-				try {
-
-					mysql_Connection.conn.rollback();
-
-				} catch (SQLException e1) {
-
-					e1.printStackTrace();
-
-					return null;
-				}
-
-			e.printStackTrace();
-
-			return null;
+			
+			return true;
+			
 		}
-
-	}
-
+	
 	// *********************************************************************************************************
+
 	@Override
 	public Passenger Show(int id) {
 
@@ -213,84 +178,6 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 			return null;
 		}
 
-	}
-	
-	// *********************************************************************************************************
-	@Override
-	public Passenger EditInfo(String FirstName, String LastName, String UserName, String PassWord, int StuNum,
-			int NationalNum, String Gender , int id) {
-		
-		String sql;
-		
-		Passenger passenger = new Passenger();
-
-		sql = "UPDATE passenger SET FirstName = '"+FirstName+"' , LastName = '"+LastName+"' , UserName = '"+UserName+"' ,"
-				+ " PassWord='"+PassWord+"' , StuNum = '"+StuNum+"', NationalNum = '"+NationalNum+"', Gender = '" +Gender+"' WHERE ID = "+id+";";
-
-		int count = -1000 ;
-		
-		try {
-
-			count = mysql_Connection.stmt.executeUpdate(sql);
-			
-			mysql_Connection.conn.commit();
-			
-			passenger = Show(id);
-			
-		} catch (SQLException e) {
-
-			if (mysql_Connection.conn != null || count == -1000 || count < 7)
-
-				try {
-
-					mysql_Connection.conn.rollback();
-
-				} catch (SQLException e1) {
-
-					e1.printStackTrace();
-
-					return null;
-				}
-
-			e.printStackTrace();
-
-			return null;
-		}
-		
-		return passenger;
-	}
-	
-	// *********************************************************************************************************
-	@Override
-	public boolean Delete(int id) {
-		
-		String sql;
-		
-		sql = "DELETE FROM `passenger` WHERE `passenger`.`ID` = "+id+";";
-		
-		int result = -1;
-		
-		try {
-			
-			result = mysql_Connection.stmt.executeUpdate(sql);
-			
-			mysql_Connection.conn.commit();
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			
-			return false;
-		}
-		
-		if (result != 1) {
-			
-			return false;
-			
-		}
-		
-		return true;
-		
 	}
 	
 	// *********************************************************************************************************
@@ -357,6 +244,13 @@ public class Passenger_DAO_Implementation implements Passenger_DAO {
 		return passengers;
 		
 	}
+
+//	*****************************************************************************************************
 	
+	public List<Trip> SearchTrip(String origin, String destination){
+		
+		return trip_DAO.SearchReqableTrips();
+		
+	}
 	
 }

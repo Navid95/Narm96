@@ -21,6 +21,7 @@ public class Passenger extends User {
 	}
 	
 	public Passenger() {
+		this.Role = 1;	
 	}
 
 	// Functions
@@ -62,7 +63,5 @@ public class Passenger extends User {
 	public void setTrips(List<Trip> trips) {
 		Trips = trips;
 	}
-
 	
-
 }

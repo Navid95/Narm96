@@ -15,8 +15,7 @@ public class Car {
 		SitNum = sitNum;
 	}
 	
-	public Car() {
-	}
+	public Car() {}
 	
 	
 	@JsonProperty("CarName")

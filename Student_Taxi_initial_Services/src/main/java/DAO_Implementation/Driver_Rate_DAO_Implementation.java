@@ -10,8 +10,10 @@ import users.Rate;
 
 public class Driver_Rate_DAO_Implementation implements Driver_Rate_DAO {
 	
+	private mysql_Connection mysql_Connection;
+	
 	public Driver_Rate_DAO_Implementation() throws ClassNotFoundException, SQLException {
-		new mysql_Connection();
+		mysql_Connection = new mysql_Connection();
 	}
 	
 	// *********************************************************************************************************
@@ -37,23 +39,26 @@ public class Driver_Rate_DAO_Implementation implements Driver_Rate_DAO {
 			if (mysql_Connection.rs.next()) {
 
 				autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
+				
+				if (autoIncKeyFromApi != -1) {
+
+					rate = Show(autoIncKeyFromApi);
+
+					return rate;
+
+				} else {
+
+					return null;
+
+				}
+
 
 			} else {
 
 				System.out.println("No id returned");
 				
-			}
-
-			if (autoIncKeyFromApi != -1) {
-
-				rate = Show(autoIncKeyFromApi);
-
-				return rate;
-
-			} else {
-
 				return null;
-
+				
 			}
 
 		} catch (SQLException e) {
@@ -187,17 +192,19 @@ public class Driver_Rate_DAO_Implementation implements Driver_Rate_DAO {
 			
 			mysql_Connection.conn.commit();
 			
+			System.out.println("RateDao result : "+result);
+			
+			if (result != 1) {
+				
+				return false;
+				
+			}
+			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 			
 			return false;
-		}
-		
-		if (result != 1) {
-			
-			return false;
-			
 		}
 		
 		return true;

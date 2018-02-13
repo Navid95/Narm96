@@ -2,6 +2,7 @@ package DataBase_Connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,8 +14,8 @@ public class mysql_Connection {
 	public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	public static final String DB_URL = "jdbc:mysql://localhost:3307/Student_Taxi";
 	public static Connection conn = null;
-	public static Statement stmt = null;
-	public static ResultSet rs = null;
+	public Statement stmt = null;
+	public ResultSet rs = null;
 
 	// Database credentials
 

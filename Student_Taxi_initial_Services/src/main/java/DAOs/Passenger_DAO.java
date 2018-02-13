@@ -2,22 +2,23 @@ package DAOs;
 
 import java.util.List;
 
+import Trip.Trip;
 import users.Passenger;
 
 public interface Passenger_DAO {
 
-	public Passenger CreateNew(Passenger passenger);
-
-	public Passenger CreateNew(String FirstName, String LastName, String UserName, String PassWord, int StuNum,
-			int NationalNum, String Gender);
+	public int NewPassenger();
+	
+	public boolean DeletePassenger(int id);
 	
 	public Passenger Show(int id);
 	
-	public Passenger EditInfo(String FirstName, String LastName, String UserName, String PassWord, int StuNum,
-			int NationalNum, String Gender , int id);
-	
-	public boolean Delete(int id);
-	
 	public List<Passenger> showAll(int offset , int rowNum);
+	
+	public List<Trip> SearchTrip(String origin, String destination);
+	
+//	public Passenger ReqTrip(int trip_id , int passenger_id);
+	
+//	public Passenger UnReqTrip(int trip_id , int passenger_id);
 
 }

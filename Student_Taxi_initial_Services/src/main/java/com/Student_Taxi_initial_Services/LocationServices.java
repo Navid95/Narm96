@@ -15,7 +15,9 @@ import DAO_Implementation.Location_DAO_Implementation;
 import DAOs.Location_DAO;
 import Trip.Location;
 import users.Driver_Rate;
+import users.Passenger;
 import users.Rate;
+import users.User;
 
 @Path("Location")
 public class LocationServices {
@@ -68,6 +70,9 @@ public class LocationServices {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String CreateNew(@PathParam("Origin") String Origin , @PathParam("Destination") String Destination) {
 		Location location;
+		
+		User user1 = new Passenger();
+//		System.out.println( user1.getRole());
 		
 		location = locationDAO.CreateNew(Origin , Destination);
 		

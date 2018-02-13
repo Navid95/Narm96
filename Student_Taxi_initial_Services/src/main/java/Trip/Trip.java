@@ -12,7 +12,7 @@ public class Trip {
 	
 	private int Sits;
 	
-	private double sitPrice;
+	private double SitPrice;
 	
 	public Trip() {
 	}
@@ -23,7 +23,7 @@ public class Trip {
 	}
 	
 	public void calculatePaymentPrice() {
-		this.Payment.setPrice(sitPrice*Sits);
+		this.Payment.setPrice(SitPrice*Sits);
 	}
 	
 	public int getId() {
@@ -42,9 +42,17 @@ public class Trip {
 		return Location;
 	}
 	
+	public double getSitPrice() {
+		return SitPrice;
+	}
+	
 	@JsonProperty("Sits")
 	public void setSits(int sits) {
 		Sits = sits;
+	}
+	@JsonProperty("SitPrice")
+	public void setSitPrice(double price) {
+		SitPrice = price;
 	}
 	
 	@JsonProperty("Payment")

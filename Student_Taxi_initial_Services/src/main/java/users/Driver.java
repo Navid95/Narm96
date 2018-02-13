@@ -14,6 +14,7 @@ public class Driver extends User {
 	// Constructor
 
 	public Driver() {
+		this.Role = 2;
 	}
 
 	public Driver(String FirstName, String LastName, String UserName, String PassWord, int StuNum, int NationalNum,

@@ -1,10 +1,12 @@
 package DAOs;
 
+import java.util.List;
+
 import Trip.Payment;
 
 public interface Payment_DAO {
 	
-	public Payment CreateNew(Payment payment);
+//	public Payment CreateNew(Payment payment);
 	
 	public Payment CreateNew(double Price , boolean State);
 	
@@ -15,5 +17,9 @@ public interface Payment_DAO {
 	public Payment Pay(int id);
 	
 	public boolean Delete(int id);
+
+	public Payment CreateNewEmpty();
+	
+	public List<Payment> SearchFalseStates();
 	
 }

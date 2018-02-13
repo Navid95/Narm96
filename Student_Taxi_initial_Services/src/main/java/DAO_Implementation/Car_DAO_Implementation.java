@@ -9,8 +9,10 @@ import users.Car;
 
 public class Car_DAO_Implementation implements Car_DAO {
 	
+	private mysql_Connection mysql_Connection;
+	
 	public Car_DAO_Implementation() throws ClassNotFoundException, SQLException {
-		new mysql_Connection();
+		mysql_Connection = new mysql_Connection();
 	}
 	
 	// *********************************************************************************************************
@@ -92,11 +94,6 @@ public class Car_DAO_Implementation implements Car_DAO {
 			mysql_Connection.rs = mysql_Connection.stmt.getGeneratedKeys();
 			mysql_Connection.conn.commit();
 			
-			car = new Car();
-			
-			car.setCarName(carName);
-			car.setSitNum(sitNum);
-			
 			int autoIncKeyFromApi = -1;
 			
 			if (mysql_Connection.rs.next()) {
@@ -105,7 +102,7 @@ public class Car_DAO_Implementation implements Car_DAO {
 				
 				if (autoIncKeyFromApi != -1) {
 
-					car.setId(autoIncKeyFromApi);
+					car = Show(autoIncKeyFromApi);
 
 					return car;
 
@@ -169,6 +166,7 @@ public class Car_DAO_Implementation implements Car_DAO {
 			car.setCarName(mysql_Connection.rs.getString("CarName"));
 			car.setSitNum(mysql_Connection.rs.getInt("SitNum"));
 			car.setId(id);
+			System.out.println("Car ID (CarDao): "+car.getId());
 			
 			return car;
 
@@ -244,6 +242,8 @@ public class Car_DAO_Implementation implements Car_DAO {
 	@Override
 	public boolean Delete(int id) {
 		
+		System.out.println("CAr DAO Delete");
+		
 		String sql;
 		
 		sql = "DELETE FROM `car` WHERE `car`.`ID` = "+id+";";
@@ -257,7 +257,7 @@ public class Car_DAO_Implementation implements Car_DAO {
 			mysql_Connection.conn.commit();
 			
 		} catch (SQLException e) {
-			
+			System.out.println("CarDao Delete EROOORRR");
 			e.printStackTrace();
 			
 			return false;
@@ -268,6 +268,7 @@ public class Car_DAO_Implementation implements Car_DAO {
 			return false;
 			
 		}
+		System.out.println("carDao delete result : "+result);
 		
 		return true;
 		

@@ -9,9 +9,11 @@ import Trip.Location;
 
 public class Location_DAO_Implementation implements Location_DAO {
 	
+	private mysql_Connection mysql_Connection;
+	
 	public Location_DAO_Implementation() throws ClassNotFoundException, SQLException   {
 		
-		new mysql_Connection();
+		mysql_Connection = new mysql_Connection();
 		
 	}
 	
@@ -26,7 +28,7 @@ public class Location_DAO_Implementation implements Location_DAO {
 			sql = "INSERT INTO `location` (`Origin`, `Destination`) VALUES ( '"+origin+"', '"+destination+"');";
 
 			try {
-
+				
 				mysql_Connection.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 				mysql_Connection.rs = mysql_Connection.stmt.getGeneratedKeys();
 				mysql_Connection.conn.commit();
@@ -36,23 +38,23 @@ public class Location_DAO_Implementation implements Location_DAO {
 				if (mysql_Connection.rs.next()) {
 
 					autoIncKeyFromApi = mysql_Connection.rs.getInt(1);
+					
+					if (autoIncKeyFromApi != -1) {
+
+						location = Show(autoIncKeyFromApi);
+						
+						return location;
+
+					} else {
+
+						return null;
+
+					}
 
 				} else {
 
 					return null;
 						
-				}
-
-				if (autoIncKeyFromApi != -1) {
-
-					location = Show(autoIncKeyFromApi);
-
-					return location;
-
-				} else {
-
-					return null;
-
 				}
 
 			} catch (SQLException e) {
